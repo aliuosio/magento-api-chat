@@ -1,0 +1,22 @@
+.chat-modal-popup {
+    position: fixed;        /* Fix position relative to the viewport */
+    bottom: 20px;           /* 20px from the bottom */
+    right: 20px;            /* 20px from the right */
+    z-index: 9999;          /* Ensure the modal is on top */
+    max-width: 300px;       /* Optional: Set a max width for the modal */
+    width: 100%;            /* Ensure it doesn't exceed the screen width */
+}
+
+.chat-modal-popup .modal-header h3 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.chat-modal-popup .modal-body {
+    padding: 15px;
+}
+
+.chat-modal-popup .modal-close {
+    font-size: 18px;
+    line-height: 18px;
+}

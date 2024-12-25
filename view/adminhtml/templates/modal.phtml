@@ -1,0 +1,41 @@
+<button id="open-chat" class="open-chat-button">Open Chat</button>
+<div id="chat-modal" class="modal-content" style="display:none;">
+    <div class="modal-body">
+        <form id="ajax-form">
+            <textarea id="chat-input"></textarea>
+        </form>
+        <div id="chat-response"></div>
+    </div>
+</div>
+
+<script>
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function(
+            $,
+            modal
+        ) {
+            var options = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+                buttons: [{
+                    text: $.mage.__('Continue'),
+                    class: 'mymodal1',
+                    click: function () {
+                        this.closeModal();
+                    }
+                }]
+            };
+
+            const popup = modal(options, $('#chat-modal'));
+            $("#open-chat").on('click',function(){
+                $("#chat-modal").modal("openModal");
+            });
+        }
+    );
+
+</script>

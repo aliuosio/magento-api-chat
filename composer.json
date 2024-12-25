@@ -1,0 +1,24 @@
+{
+    "name": "osio/magento-api-chat",
+    "description": "A Magento 2 module that integrates a chat interface into the admin backend. This module enables seamless communication directly within the Magento 2 admin panel, enhancing backend user collaboration and support.",
+    "type": "magento2-module",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Osiozekhai Aliu"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^8.1",
+        "cboden/ratchet": "^0.4.4"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Osio\\APIChat\\": ""
+        }
+    }
+}

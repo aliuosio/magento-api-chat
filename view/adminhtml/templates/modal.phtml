@@ -1,8 +1,17 @@
+<?php
+
+use Osio\APIChat\Block\Index;
+
+/** @var Index $block * */
+?>
 <button id="open-chat" class="open-chat-button modal-button">GraphQL API Query</button>
 <div id="chat-modal" class="modal-content" style="display:none;">
     <div class="modal-body">
         <form id="ajax-form">
-            <textarea id="chat-input">Write your Query</textarea>
+            <input name="form_key" type="hidden"
+                   value="<?= $block->getFormKeyEscaped(); ?>"/>
+            <label for="chat-input">Write your Query:</label>
+            <textarea id="chat-input" placeholder="Enter your GraphQL query here..."></textarea>
         </form>
         <div id="chat-response"></div>
     </div>
@@ -12,55 +21,54 @@
     require(
         [
             'jquery',
-            'Magento_Ui/js/modal/modal'
+            'Magento_Ui/js/modal/modal',
+            'mage/url'
         ],
-        function(
+        function (
             $,
-            modal
+            modal,
+            urlBuilder
         ) {
+            // Modal configuration
             const options = {
                 type: 'popup',
                 responsive: true,
                 innerScroll: true,
                 buttons: [{
-                    text: $.mage.__('send'),
+                    text: $.mage.__('Send'),
                     click: function () {
-                        event.preventDefault();
-
-                        const formKey = $.mage.cookies.get('form_key');
                         const formData = {
-                            form_key: formKey,
+                            form_key: $('input[name="form_key"]').val(),
                             content: $('#chat-input').val(),
                         };
 
                         $.ajax({
-                            url: url.build('admin/apichat/index'),
+                            url: urlBuilder.build('admin/apichat'),
                             type: 'POST',
                             dataType: 'json',
                             data: formData,
                             showLoader: true,
                             success: function (response) {
                                 if (response && response.data) {
-                                    $('#chat-response').html(response.data); // Display response in chat
-                                    $('#chat-input').val(''); // Clear input field
+                                    $('#chat-response').html(response.data);
+                                    $('#chat-input').val('');
                                 } else {
-                                    console.log('Invalid response: ', response);
+                                    console.log('Invalid response:', response);
                                 }
                             },
                             error: function (xhr, status, error) {
-                                console.log('Error: ' + error);
+                                console.log('HTTP Status Code:', xhr.status);
+                                console.log('Status:', status);
+                                console.log('Error:', error);
                             },
                         });
                     }
                 }]
             };
 
-            const popup = modal(options, $('#chat-modal'));
-            $("#open-chat").on('click',function(){
+            $("#open-chat").on('click', function () {
                 $("#chat-modal").modal("openModal");
             });
-
         }
     );
-
 </script>

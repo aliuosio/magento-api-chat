@@ -1,22 +1,23 @@
-.chat-modal-popup {
-    position: fixed;        /* Fix position relative to the viewport */
-    bottom: 20px;           /* 20px from the bottom */
-    right: 20px;            /* 20px from the right */
-    z-index: 9999;          /* Ensure the modal is on top */
-    max-width: 300px;       /* Optional: Set a max width for the modal */
-    width: 100%;            /* Ensure it doesn't exceed the screen width */
+#chat-input {
+    width: 100%;
 }
 
-.chat-modal-popup .modal-header h3 {
-    margin: 0;
-    font-size: 20px;
+.open-chat-button, .open-chat-button:active, .open-chat-button:focus {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
 }
 
-.chat-modal-popup .modal-body {
-    padding: 15px;
-}
-
-.chat-modal-popup .modal-close {
-    font-size: 18px;
-    line-height: 18px;
+.open-chat-button:hover {
+    background-color: #0056b3;
+    color: white;
 }

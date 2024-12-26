@@ -1,8 +1,8 @@
-<button id="open-chat" class="open-chat-button">Open Chat</button>
+<button id="open-chat" class="open-chat-button modal-button">GraphQL API Query</button>
 <div id="chat-modal" class="modal-content" style="display:none;">
     <div class="modal-body">
         <form id="ajax-form">
-            <textarea id="chat-input"></textarea>
+            <textarea id="chat-input">Write your Query</textarea>
         </form>
         <div id="chat-response"></div>
     </div>
@@ -18,15 +18,39 @@
             $,
             modal
         ) {
-            var options = {
+            const options = {
                 type: 'popup',
                 responsive: true,
                 innerScroll: true,
                 buttons: [{
-                    text: $.mage.__('Continue'),
-                    class: 'mymodal1',
+                    text: $.mage.__('send'),
                     click: function () {
-                        this.closeModal();
+                        event.preventDefault();
+
+                        const formKey = $.mage.cookies.get('form_key');
+                        const formData = {
+                            form_key: formKey,
+                            content: $('#chat-input').val(),
+                        };
+
+                        $.ajax({
+                            url: url.build('admin/apichat/index'),
+                            type: 'POST',
+                            dataType: 'json',
+                            data: formData,
+                            showLoader: true,
+                            success: function (response) {
+                                if (response && response.data) {
+                                    $('#chat-response').html(response.data); // Display response in chat
+                                    $('#chat-input').val(''); // Clear input field
+                                } else {
+                                    console.log('Invalid response: ', response);
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                console.log('Error: ' + error);
+                            },
+                        });
                     }
                 }]
             };
@@ -35,6 +59,7 @@
             $("#open-chat").on('click',function(){
                 $("#chat-modal").modal("openModal");
             });
+
         }
     );
 
